@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
     profilePicture: {
         type: String,
         required: false,
-        default: 'uploads/default.jpg'
+        default: 'uploads/default-user.jpg'
     },
     name: {
         type: String,
