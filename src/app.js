@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser"
 import userRoutes from "./routes/user.routes.js"
 import memberRoutes from "./routes/member.routes.js"
 import allyRoutes from "./routes/ally.routes.js"
+import curseRoutes from "./routes/curse.routes.js"
 
 config.connectDB()
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(userRoutes)
 app.use(memberRoutes)
 app.use(allyRoutes)
+app.use(curseRoutes)
 
 app.get("/", (req, res) => {
     res.send("FARA - Backend API v0.0.1")
