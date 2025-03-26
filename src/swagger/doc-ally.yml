@@ -1,0 +1,413 @@
+paths:
+  /api/aliados:
+    post:
+      summary: Crear un nuevo aliado
+      tags:
+        - Aliados
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  description: Nombre del aliado
+                  example: "Aliado A"
+                descripcion:
+                  type: string
+                  description: Descripción del aliado
+                  example: "Un aliado estratégico para el negocio"
+                contacto:
+                  type: string
+                  description: Información de contacto
+                  example: "contacto@aliado.com"
+                activo:
+                  type: boolean
+                  description: Estado del aliado
+                  example: true
+      responses:
+        "201":
+          description: Aliado creado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  aliado:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      nombre:
+                        type: string
+                        example: "Aliado A"
+                      descripcion:
+                        type: string
+                        example: "Un aliado estratégico para el negocio"
+                      contacto:
+                        type: string
+                        example: "contacto@aliado.com"
+                      activo:
+                        type: boolean
+                        example: true
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2023-01-01T00:00:00Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2023-01-01T00:00:00Z"
+                  error:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Aliado creado"
+        "400":
+          description: Error de validación o datos incorrectos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Error en los datos del aliado"
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Error al crear el aliado"
+
+    get:
+      summary: Obtener todos los aliados
+      tags:
+        - Aliados
+      responses:
+        "200":
+          description: Lista de aliados obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  aliados:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          example: "507f1f77bcf86cd799439011"
+                        nombre:
+                          type: string
+                          example: "Aliado A"
+                        descripcion:
+                          type: string
+                          example: "Un aliado estratégico para el negocio"
+                        contacto:
+                          type: string
+                          example: "contacto@aliado.com"
+                        activo:
+                          type: boolean
+                          example: true
+                        createdAt:
+                          type: string
+                          format: date-time
+                          example: "2023-01-01T00:00:00Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          example: "2023-01-01T00:00:00Z"
+                  error:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Aliados encontrados"
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Error al obtener los aliados"
+
+  /api/aliados/{id}:
+    get:
+      summary: Obtener un aliado por ID
+      tags:
+        - Aliados
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID del aliado
+      responses:
+        "200":
+          description: Aliado encontrado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  aliado:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      nombre:
+                        type: string
+                        example: "Aliado A"
+                      descripcion:
+                        type: string
+                        example: "Un aliado estratégico para el negocio"
+                      contacto:
+                        type: string
+                        example: "contacto@aliado.com"
+                      activo:
+                        type: boolean
+                        example: true
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2023-01-01T00:00:00Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2023-01-01T00:00:00Z"
+                  error:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Aliado encontrado"
+        "404":
+          description: Aliado no encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Aliado no encontrado"
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Error al obtener el aliado"
+
+    put:
+      summary: Actualizar un aliado
+      tags:
+        - Aliados
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID del aliado
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  description: Nombre del aliado
+                  example: "Aliado B"
+                descripcion:
+                  type: string
+                  description: Descripción del aliado
+                  example: "Un nuevo aliado estratégico"
+                contacto:
+                  type: string
+                  description: Información de contacto
+                  example: "contacto@nuevoaliado.com"
+                activo:
+                  type: boolean
+                  description: Estado del aliado
+                  example: true
+      responses:
+        "200":
+          description: Aliado actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  aliado:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      nombre:
+                        type: string
+                        example: "Aliado B"
+                      descripcion:
+                        type: string
+                        example: "Un nuevo aliado estratégico"
+                      contacto:
+                        type: string
+                        example: "contacto@nuevoaliado.com"
+                      activo:
+                        type: boolean
+                        example: true
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2023-01-01T00:00:00Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2023-01-01T00:00:00Z"
+                  error:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Aliado actualizado"
+        "404":
+          description: Aliado no encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Aliado no encontrado"
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Error al actualizar el aliado"
+
+    delete:
+      summary: Eliminar un aliado
+      tags:
+        - Aliados
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID del aliado
+      responses:
+        "200":
+          description: Aliado eliminado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  aliado:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      nombre:
+                        type: string
+                        example: "Aliado A"
+                      descripcion:
+                        type: string
+                        example: "Un aliado estratégico para el negocio"
+                      contacto:
+                        type: string
+                        example: "contacto@aliado.com"
+                      activo:
+                        type: boolean
+                        example: true
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2023-01-01T00:00:00Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2023-01-01T00:00:00Z"
+                  error:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Aliado eliminado"
+        "404":
+          description: Aliado no encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Aliado no encontrado"
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Error al eliminar el aliado"

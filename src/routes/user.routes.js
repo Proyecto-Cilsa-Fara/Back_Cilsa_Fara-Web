@@ -1,14 +1,18 @@
-import express from "express"
+import express from "express";
 // import authMiddleware from "../middlewares/auth.middleware.js"
-// import { UserController } from "../controllers/user.controller.js"
+import UserController  from "../controllers/user.controller.js"
 
-const router = express.Router()
+const router = express.Router();
 
-// router.put("/api/users", authMiddleware, UserController.update)
-// router.delete("/api/users", authMiddleware, UserController.delete)
 
-// Endpoint falso solamente para poder dejar comentado las otras rutas
-// como ejemplos válidos.
-router.delete("/api/users", () => console.log("delete some user"))
+router.post("/api/users/register", UserController.create)
 
-export default router
+router.get("/api/users",  UserController.getAll)
+
+router.get("/api/users/:id",  UserController.getOne)
+
+router.put("/api/users/:id",  UserController.update)
+
+router.delete("/api/users/:id", UserController.delete)
+
+export default router;
