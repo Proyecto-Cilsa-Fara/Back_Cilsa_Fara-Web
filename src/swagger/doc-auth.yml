@@ -1,0 +1,214 @@
+paths:
+  /api/auth/register:
+    post:
+      summary: Registra un nuevo usuario
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Nombre del usuario
+                  example: "Test0003"
+                email:
+                  type: string
+                  description: Correo electrónico del usuario
+                  example: "test0003@test.com"
+                password:
+                  type: string
+                  description: Contraseña del usuario
+                  example: "Password123!"
+              required:
+                - name
+                - email
+                - password
+      responses:
+        "201":
+          description: Usuario registrado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67e46fbec8b37af8bd85abf6"
+                      email:
+                        type: string
+                        example: "test0003@test.com"
+                      name:
+                        type: string
+                        example: "Test0003"
+                  error:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Usuario creado"
+        "400":
+          description: Error de validación o usuario ya existe
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Correo electrónico ya registrado"
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Error al registrar el usuario"
+
+  /api/auth/login:
+    post:
+      summary: Inicia sesión de usuario
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Correo electrónico del usuario
+                  example: "test0003@test.com"
+                password:
+                  type: string
+                  description: Contraseña del usuario
+                  example: "Password123!"
+              required:
+                - email
+                - password
+      responses:
+        "200":
+          description: Login exitoso, retorna el token JWT
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  error:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Inicio de sesión exitoso"
+        "400":
+          description: Error de validación o credenciales incorrectas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Credenciales incorrectas"
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Error al iniciar sesión"
+
+  /api/auth/me:
+    get:
+      summary: Obtiene los datos del usuario autenticado
+      tags:
+        - Auth
+      security:
+        - bearerAuth: [] # Requiere token JWT
+      responses:
+        "200":
+          description: Datos del usuario autenticado obtenidos exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    example: "67e46fbec8b37af8bd85abf6"
+                  profilePicture:
+                    type: string
+                    example: "uploads/default-user.jpg"
+                  name:
+                    type: string
+                    example: "Test0003"
+                  email:
+                    type: string
+                    example: "test0003@test.com"
+                  role:
+                    type: string
+                    example: "user"
+                  createdAt:
+                    type: string
+                    example: "2025-03-26T21:21:02.136Z"
+                  updatedAt:
+                    type: string
+                    example: "2025-03-26T21:21:02.136Z"
+                  __v:
+                    type: integer
+                    example: 0
+        "401":
+          description: Usuario no autorizado o token inválido
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "No autorizado"
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Error al obtener los datos del usuario"
