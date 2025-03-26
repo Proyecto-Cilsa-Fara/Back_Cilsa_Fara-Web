@@ -65,6 +65,11 @@ const mUser = {
         }
     },
 
+    getUser: async (id) => {
+        const user = await User.findById(id)
+        return user
+    }, 
+
     getAll: async () => {
         const users = await User.find({})
         return users
@@ -91,7 +96,17 @@ const mUser = {
     },
 
     delete : async (id) => {
-        await User.findByIdAndDelete({_id : id})
+        await User.findByIdAndDelete(id)
+        .then(deletedUser => {
+            if (!deletedUser) {
+            //   console.log('Usuario borrado exitosamente:', deletedUser);
+            // } else {
+              throw {message: 'Usuario no encontrado'}
+            }
+          })
+          .catch(error => {
+            throw {message: error.message}
+        });
     }
 
 }

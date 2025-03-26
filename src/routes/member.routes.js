@@ -1,24 +1,16 @@
-import express from "express"
-import Member from "../models/member.model.js"
+import express from "express";
+import MemberController from "../controllers/member.controller.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.post("/add-member", async (req, res) => {
-    const { name, lastName, position, photo } = req.body;
-    try {
-      const newMember = new Member({
-        name,
-        lastName,
-        position,
-        photo
-      });
-  
-      await newMember.save();
-      res.status(201).json({ message: "Miembro añadido correctamente" });
-    } catch (error) {
-      console.log(error.message);
-      res.status(500).json({ message: "Error al añadir el miembro", error });
-    }
-  });
-  
-  export default router
+router.post("/api/members", MemberController.create);
+
+router.get("/api/members", MemberController.getAll);
+
+router.get("/api/members/:id", MemberController.getMember);
+
+router.put("/api/members/:id", MemberController.update);
+
+router.delete("/api/members/:id", MemberController.delete);
+
+export default router;

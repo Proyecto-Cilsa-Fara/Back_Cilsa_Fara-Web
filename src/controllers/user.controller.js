@@ -19,10 +19,35 @@ const UserController = {
         
     },
 
+    getOne: async(req, res) => {
+        const id = req.params.id;
+        // console.log(id)
+        // res.json({message: 'exito'})
+        try {
+            const userDb = await mUser.getUser(id)
+            // console.log('user: ', userDb)
+            
+            if (userDb) {
+                res.json({
+                    name: userDb.name,
+                    email: userDb.email,
+                    profilePicture: userDb.profilePicture,
+                    id: userDb._id
+                })
+            } else {
+                // usuario no encontrado
+                res.status(404).json({error:true, message: 'Usuario no encontrado'})
+            }
+                
+        } catch (err) {
+            res.status(500).json({error: true, message: err.message})
+        }
+    },
+
     getAll: async(req, res) => {
         try {
             const users = await mUser.getAll()
-            const usersDto = users.map(user => {
+            const data = users.map(user => {
                 return {
                     name: user.name,
                     email: user.email,
@@ -30,7 +55,7 @@ const UserController = {
                     id: user._id
                 }
             });
-            res.json({usersDto})
+            res.json({data})
         } catch (err) {
             res.status(500).json({error:true, message: err.message})
         }
