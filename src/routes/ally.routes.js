@@ -1,25 +1,27 @@
-import express from "express"
-import Ally from "../models/ally.model.js"
+import express from "express";
+import { 
+  createAlly, 
+  getAllies, 
+  getAllyById, 
+  updateAlly, 
+  deleteAlly 
+} from "../controllers/ally.controller.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.post("/add-ally", async (req, res) => {
-  const { order, name, logo } = req.body;
-  
-  try {
-    const newAlly = new Ally({
-      order,
-      name,
-      logo
-    });
+// Crear un aliado
+router.post("/api/ally", createAlly);
 
-    await newAlly.save();
-    
-    res.status(201).json({ message: "Aliado añadido correctamente" });
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: "Error al añadir el aliado", error });
-  }
-});
+// Obtener todos los aliados
+router.get("/api/ally", getAllies);
 
-export default router
+// Obtener un aliado por ID
+router.get("/api/ally/:id", getAllyById);
+
+// Actualizar un aliado por ID
+router.put("/api/ally/:id", updateAlly);
+
+// Eliminar un aliado por ID
+router.delete("/api/ally/:id", deleteAlly);
+
+export default router;
